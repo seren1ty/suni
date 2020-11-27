@@ -1,27 +1,33 @@
-import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
+import React from 'react';
+import { getWeatherOnDay } from '../../../services/weather.service';
+import { GetServerSideProps } from "next";
 
-// Called always on every page request. Even on production. For constantly updating data
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
+    const cityParam = context.query.city.toLowerCase();
+    const dayParam = context.params.day.toLowerCase();
+
+    const daysWeather = await getWeatherOnDay(cityParam, dayParam);
+
+    console.log(daysWeather);
+
     return {
         props: {
-            myFavNum: Math.random()
+            city: cityParam,
+            day: dayParam,
+            weather: daysWeather
         }
     }
 }
 
-// Executes on server AND client
-const DynamicServerside = (props) => {
-
-    const router = useRouter();
-
-    console.log(router.query.city + ' - ' + router.query.day);
+const WeatherCityDayPage = (props) => {
 
     return (
-      <div>
-          <h1>Hello from Dynamic {props.myFavNum}</h1>
-      </div>
+        <div>
+            <h1>{props.day} {props.city}</h1>
+            <p>{props.weather.temp.day}</p>
+            <p>{props.weather.weather[0].description}</p>
+        </div>
     )
-  }
+}
 
-  export default DynamicServerside;
+export default WeatherCityDayPage;
