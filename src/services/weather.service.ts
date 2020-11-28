@@ -1,6 +1,9 @@
 import { isSunday, isMonday, isTuesday, isWednesday, isThursday, isFriday, isSaturday } from 'date-fns';
+import { lookupCooridinates } from './city.service';
 
-export async function getWeatherForcast(cityName: string) {
+const DAY_NAMES = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+export const getWeatherForcast = async (cityName: string) => {
     const weatherData = await lookupWeather(cityName, 'minutely,hourly,alerts');
 
     console.log('Weather Data [Forcast]: ', weatherData);
@@ -8,7 +11,7 @@ export async function getWeatherForcast(cityName: string) {
     return weatherData;
 }
 
-export async function getWeatherToday(cityName: string) {
+export const getWeatherToday = async (cityName: string) => {
     const weatherData = await lookupWeather(cityName, 'minutely,hourly,daily,alerts');
 
     console.log('Weather Data [Current]: ', weatherData);
@@ -16,7 +19,10 @@ export async function getWeatherToday(cityName: string) {
     return weatherData;
 }
 
-export async function getWeatherOnDay(cityName: string, dayName: string) {
+export const getWeatherOnDay = async (cityName: string, dayName: string) => {
+    if (DAY_NAMES.indexOf(dayName) < 0)
+        throw new Error("Provided name must be either 'today', or a day of the week");
+
     const weatherData = await lookupWeather(cityName, 'current,minutely,hourly,alerts');
 
     const matchingDaysWeather = weatherData.daily.find((day: any) => matchDailyWeatherToDayName(day, dayName));
@@ -26,33 +32,34 @@ export async function getWeatherOnDay(cityName: string, dayName: string) {
     return matchingDaysWeather;
 }
 
-const lookupCooridinates = async (cityName: string) => {
-
-    const APIKEY = process.env.MAPQUESTAPI_KEY;
-
-    const cityRS = await fetch(`http://open.mapquestapi.com/geocoding/v1/address?key=${APIKEY}&location=${cityName}`);
-
-    const cityData = await cityRS.json();
-
-    const latLng = cityData.results[0].locations[0].latLng;
-
-    console.log('Lat/Lng Data: ', latLng);
-
-    return latLng;
-}
-
-const lookupWeather = async (cityName: string, excludeFields: string) => {
-
+export const lookupWeather = async (cityName: string, excludeFields: string) => {
     const latLng = await lookupCooridinates(cityName);
 
     const APPID = process.env.OPENWEATHERMAP_APPID;
 
-    const weatherRS = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latLng.lat}&lon=${latLng.lng}&appid=${APPID}&units=metric&exclude=${excludeFields}`);
+    let weatherData;
 
-    return await weatherRS.json();
+    try {
+        const weatherRS = await fetch(
+            `https://api.openweathermap.org/data/2.5/onecall?lat=${latLng.lat}&lon=${latLng.lng}&appid=${APPID}&units=metric&exclude=${excludeFields}`
+        );
+
+        weatherData = await weatherRS.json();
+    } catch (e) {
+        let error = e.message;
+
+        if (e.code === 'ENOTFOUND')
+            error = 'Please try again later';
+
+        console.error(e);
+
+        throw new Error(error);
+    }
+
+    return weatherData;
 }
 
-const matchDailyWeatherToDayName = (day: any, dayName: string) => {
+export const matchDailyWeatherToDayName = (day: any, dayName: string) => {
     const date = new Date(day.dt * 1000);
 
     if (isMonday(date) && dayName === 'monday')

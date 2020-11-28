@@ -1,22 +1,38 @@
 import React from 'react';
 import { getWeatherForcast } from '../../../services/weather.service';
 import { GetServerSideProps } from "next";
+import Error from '../../../components/error.component';
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
     const cityParam = context.query.city.toLowerCase();
 
-    const { current, daily } = await getWeatherForcast(cityParam);
+    let result;
+
+    try {
+        result = await getWeatherForcast(cityParam);
+    } catch(e) {
+        console.error(e);
+
+        return {
+            props: {
+                error: e.message
+            }
+        }
+    }
 
     return {
         props: {
             city: cityParam,
-            current: current,
-            daily: daily
+            current: result.current,
+            daily: result.daily
         }
     }
 }
 
 const WeatherCityPage = (props) => {
+
+    if (props.error)
+        return <Error customError={{ message: props.error }}/>
 
     return (
         <div>
