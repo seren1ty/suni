@@ -39,7 +39,10 @@ const WeatherCityDayPage = (props) => {
 
     return (
         <div>
-            <h1>{props.day} {props.city}</h1>
+            <h1>
+                <div>{props.city}</div>
+                <div>{props.day}</div>
+            </h1>
             <p>{props.current.temp.day}</p>
             <p>{props.current.weather[0].description}</p>
         </div>

@@ -1,20 +1,21 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
 import { getWeatherOnDay } from "../../../../services/weather.service";
 
 export default async (req, res) => {
 
+    if (req.method !== 'GET')
+        return res.status(405).end();
+
     let { city, day } = req.query;
 
     if (!city) {
-        res.statusCode = 400;
-        res.json({ Error: "Url path must contain a city" });
+        res.status(400);
+        res.json({ error: "Url path must contain a city" });
         return;
     }
 
     if (!day) {
-        res.statusCode = 400;
-        res.json({ Error: "Url path must contain either 'today' or a city" });
+        res.status(400);
+        res.json({ error: "Url path must contain either 'today', or a day of the week" });
         return;
     }
 
