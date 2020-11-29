@@ -24,6 +24,8 @@ Run the development server:
 yarn dev
 ```
 
+***
+
 ## View weather forcast for a city
 
 Open [http://localhost:3000/weather/<city_name>](http://localhost:3000/weather/<city_name>)
@@ -35,3 +37,17 @@ Open [http://localhost:3000/weather/<city_name>/today](http://localhost:3000/wea
 ## View weather for a city, on a specific day in the coming week
 
 Open [http://localhost:3000/weather/<city_name>/<day_name>](http://localhost:3000/weather/<city_name>/<day_name>)
+
+***
+
+## Access JSON response for the weather forcast for a city
+
+Open [http://localhost:3000/api/weather/<city_name>](http://localhost:3000/api/weather/<city_name>)
+
+## Access JSON response for today's weather for a city
+
+Open [http://localhost:3000/api/weather/<city_name>/today](http://localhost:3000/api/weather/<city_name>/today)
+
+## Access JSON response for the weather for a city, on a specific day in the coming week
+
+Open [http://localhost:3000/api/weather/<city_name>/<day_name>](http://localhost:3000/api/weather/<city_name>/<day_name>)
