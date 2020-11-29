@@ -12,7 +12,7 @@ describe('WeatherCityDayPage', () => {
             city: 'sydney',
             day: 'monday',
             current: {
-                temp: { day: 21.0 },
+                temp: 21.0,
                 weather: [{ description: 'Cloudy' }]
             }
         };
@@ -20,9 +20,9 @@ describe('WeatherCityDayPage', () => {
 
     it('should render city, day and temp', () => {
         const { getByText } = render(<WeatherCityDayPage {...expectedProps} />);
-        const city = getByText(expectedProps.city);
         const day = getByText(expectedProps.day);
-        const temp = getByText(expectedProps.current.temp.day);
+        const city = getByText(expectedProps.city);
+        const temp = getByText(expectedProps.current.temp);
 
         expect(city).toBeVisible();
         expect(day).toBeVisible();

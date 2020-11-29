@@ -19,9 +19,11 @@ describe('WeatherCityTodayPage', () => {
 
     it('should render city and temp', () => {
         const { getByText } = render(<WeatherCityTodayPage {...expectedProps} />);
-        const heading = getByText('Today ' + expectedProps.city);
+        const today = getByText('today');
+        const heading = getByText(expectedProps.city);
         const temp = getByText(expectedProps.current.temp);
 
+        expect(today).toBeVisible();
         expect(heading).toBeVisible();
         expect(temp).toBeVisible();
     });

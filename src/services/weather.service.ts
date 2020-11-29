@@ -27,6 +27,9 @@ export const getWeatherOnDay = async (cityName: string, dayName: string) => {
 
     const matchingDaysWeather = weatherData.daily.find((day: any) => matchDailyWeatherToDayName(day, dayName));
 
+    matchingDaysWeather.temp = matchingDaysWeather.temp.day;
+    matchingDaysWeather.feels_like = matchingDaysWeather.feels_like.day;
+
     console.log('Weather Data [Daily]: ', matchingDaysWeather);
 
     return matchingDaysWeather;

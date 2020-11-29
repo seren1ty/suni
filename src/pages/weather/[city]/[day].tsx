@@ -2,6 +2,7 @@ import React from 'react';
 import { getWeatherOnDay } from '../../../services/weather.service';
 import { GetServerSideProps } from "next";
 import Error from '../../../components/error.component';
+import CurrentWeather from '../../../components/current-weather.component';
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
     const cityParam = context.query.city.toLowerCase();
@@ -37,16 +38,7 @@ const WeatherCityDayPage = (props) => {
     if (props.error)
         return <Error error={{ message: props.error }}/>
 
-    return (
-        <div>
-            <h1>
-                <div>{props.city}</div>
-                <div>{props.day}</div>
-            </h1>
-            <p>{props.current.temp.day}</p>
-            <p>{props.current.weather[0].description}</p>
-        </div>
-    )
+    return <CurrentWeather city={props.city} current={props.current} day={props.day} />
 }
 
 export default WeatherCityDayPage;

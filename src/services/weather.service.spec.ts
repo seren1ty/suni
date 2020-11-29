@@ -39,7 +39,7 @@ describe('getWeatherOnDay', () => {
 
         fetchMock.mockResponseOnce(JSON.stringify({
             daily: [
-                { dt: 1606784400 }
+                { dt: 1606784400, temp: { day: 21.6 }, feels_like: { day: 25 } }
             ]
         }));
 
@@ -47,6 +47,8 @@ describe('getWeatherOnDay', () => {
 
         expect(result).toBeDefined();
         expect(result.dt).toBe(1606784400);
+        expect(result.temp).toBe(21.6);
+        expect(result.feels_like).toBe(25);
     });
 
     it('should fail to return weather when day invalid', async () => {

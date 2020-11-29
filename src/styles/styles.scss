@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+html {
+    height: 100%;
+    font-size: 10px;
+
+    @media (min-width: 0px) {
+        font-size: 15px;
+    }
+
+    @media (min-width: 576px) {
+        font-size: 15px;
+    }
+
+    /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+    @media (min-width: 768px) {
+        font-size: 15px;
+    }
+
+    /* Large devices (desktops, 992px and up) */
+    @media (min-width: 992px) {
+        font-size: 16px;
+    }
+
+    /* Extra large devices (large desktops, 1200px and up) */
+    @media (min-width: 1200px) {
+        font-size: 16px;
+    }
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    height: 100%;
+    margin: 0 auto;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.nav-colour {
+    background-color: #3d7eb3;
+}
+
+.nav-title {
+    font-weight: bold;
+    font-size: 2.5rem;
+    font-family: 'Prompt',sans-serif !important;
+    padding: 0;
+}
+
+.main {
+    margin: 10px 10px;
+    color: rgb(66, 66, 66);
+
+    h1 {
+        font-size: 2.3rem;
+    }
+}
+
+.current-holder {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+
+    .current-panel {
+        flex: 1 0;
+        min-width: 300px;
+        margin: 10px 20px;
+        padding: 10px 15px;
+        border: 1px solid;
+        border-radius: 25px;
+        border-color: rgb(175, 175, 175);
+
+        &.current-left-holder {
+            display: flex;
+            align-items: center;
+
+            .current-left-panel,
+            .current-right-panel {
+                flex: 1;
+                text-align: center;
+
+                p {
+                    margin-bottom: 0px;
+                }
+            }
+
+            .current-right-panel {
+                .current-temp {
+                    font-size: 2.8rem;
+                    color: #3d7eb3;
+                }
+            }
+        }
+
+        &.current-right-holder {
+            width: 100%;
+            font-size: 1.2rem;
+
+            table {
+                width: 100%;
+
+                td {
+                    text-align: right;
+                }
+            }
+        }
+    }
+}
+
+.forcast-container {
+    margin: 25px 30px;
+
+    h3 {
+        font-weight: bold;
+    }
+
+    .forcast-holder {
+        display: flex;
+        flex-wrap: wrap;
+
+        .forcast-panel {
+            flex: 1 0;
+            min-width: 75px;
+            margin: 10px 3px;
+            padding: 10px 0;
+            text-align: center;
+
+            .current-temp {
+                font-size: 1.8rem;
+                color: #3d7eb3;
+            }
+        }
+    }
+}

@@ -2,6 +2,9 @@ import React from 'react';
 import { getWeatherForcast } from '../../../services/weather.service';
 import { GetServerSideProps } from "next";
 import Error from '../../../components/error.component';
+import css from './index.module.scss';
+import CurrentWeather from '../../../components/current-weather.component';
+import ForcastWeather from '../../../components/forcast-weather.component';
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
     const cityParam = context.query.city.toLowerCase();
@@ -24,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
         props: {
             city: cityParam,
             current: result.current,
-            daily: result.daily
+            daily: result.daily.splice(1)
         }
     }
 }
@@ -36,24 +39,8 @@ const WeatherCityPage = (props) => {
 
     return (
         <div>
-            <div>
-                <h1>{props.city}</h1>
-                <p>{props.current.temp}</p>
-                <p>{props.current.weather[0].description}</p>
-            </div>
-            <div>
-                <h3>Forcast</h3>
-                <div>
-                {
-                    props.daily.map(day => (
-                        <div key={day.dt}>
-                            <p>{day.temp.day}</p>
-                            <p>{day.weather[0].description}</p>
-                        </div>
-                    ))
-                }
-                </div>
-            </div>
+            <CurrentWeather city={props.city} current={props.current} />
+            <ForcastWeather daily={props.daily} />
         </div>
     )
 }
