@@ -2,7 +2,6 @@ import React from 'react';
 import { getWeatherForcast } from '../../../services/weather.service';
 import { GetServerSideProps } from "next";
 import Error from '../../../components/error.component';
-import css from './index.module.scss';
 import CurrentWeather from '../../../components/current-weather.component';
 import ForcastWeather from '../../../components/forcast-weather.component';
 
