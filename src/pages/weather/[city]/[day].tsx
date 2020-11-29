@@ -22,8 +22,6 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
         }
     }
 
-    console.log(daysWeather);
-
     return {
         props: {
             city: cityParam,

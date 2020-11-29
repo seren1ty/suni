@@ -3,34 +3,29 @@ import { lookupCooridinates } from './city.service';
 
 const DAY_NAMES = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
+// Lookup the weather for a city, for the current day, plus the next week
 export const getWeatherForcast = async (cityName: string) => {
-    const weatherData = await lookupWeather(cityName, 'minutely,hourly,alerts');
-
-    console.log('Weather Data [Forcast]: ', weatherData);
-
-    return weatherData;
+    return await lookupWeather(cityName, 'minutely,hourly,alerts');
 }
 
+// Lookup the weather for a city, for the current day only
 export const getWeatherToday = async (cityName: string) => {
-    const weatherData = await lookupWeather(cityName, 'minutely,hourly,daily,alerts');
-
-    console.log('Weather Data [Current]: ', weatherData);
-
-    return weatherData;
+    return await lookupWeather(cityName, 'minutely,hourly,daily,alerts');
 }
 
+// Lookup the weather for a city, for a requested day, in the next week
 export const getWeatherOnDay = async (cityName: string, dayName: string) => {
     if (DAY_NAMES.indexOf(dayName) < 0)
         throw new Error("Provided name must be either 'today', or a day of the week");
 
     const weatherData = await lookupWeather(cityName, 'current,minutely,hourly,alerts');
 
+    // Locate the future day that matches the day name provided
     const matchingDaysWeather = weatherData.daily.find((day: any) => matchDailyWeatherToDayName(day, dayName));
 
+    // Alter future days structure to match current days structure
     matchingDaysWeather.temp = matchingDaysWeather.temp.day;
     matchingDaysWeather.feels_like = matchingDaysWeather.feels_like.day;
-
-    console.log('Weather Data [Daily]: ', matchingDaysWeather);
 
     return matchingDaysWeather;
 }

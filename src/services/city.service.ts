@@ -1,5 +1,6 @@
 const WORDS_ONLY = /^[a-z ]+$/i;
 
+// Lookup the cooridinates of the cityname provided
 export async function lookupCooridinates(cityName: string) {
     if (!WORDS_ONLY.test(cityName)) {
         throw new Error("Provided city must contain only letters");
